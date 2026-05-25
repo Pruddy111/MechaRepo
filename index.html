@@ -6,6 +6,14 @@
     <title>MechaRepo - Home</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
+        /* Force mobile viewports to recognize pinching gestures and allow horizontal overflow */
+        html, body {
+            width: 100%;
+            overflow-x: auto !important;
+            touch-action: manipulation !important;
+            -webkit-overflow-scrolling: touch;
+        }
+
         /* Custom layout enhancements specifically for the welcome screen hero section */
         .hero-section {
             text-align: center;
@@ -33,9 +41,11 @@
         /* Feature containers grid setup override for landing cards */
         .features-container {
             display: flex;
-            gap: 30px;
+            gap: 20px;
             flex-wrap: wrap;
+            width: 100%;
             margin-bottom: 3rem;
+            box-sizing: border-box;
         }
 
         .feature-card {
@@ -51,6 +61,7 @@
             flex-direction: column;
             justify-content: space-between;
             transition: transform 0.2s, box-shadow 0.2s;
+            box-sizing: border-box;
         }
 
         .feature-card:hover {
@@ -136,3 +147,10 @@
                     <p>Access our structured collection of comprehensive engineering past papers. Perfect for reviewing core exam formats, tracking full question distributions, and practicing problem sets across all 7 units.</p>
                 </div>
                 <a href="pastpapers.html" class="feature-btn">Browse Past Papers</a>
+            </div>
+
+        </section>
+    </main>
+
+</body>
+</html>
