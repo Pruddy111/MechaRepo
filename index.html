@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MechaRepo - Home</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Custom layout enhancements specifically for the welcome screen hero section */
+        .hero-section {
+            text-align: center;
+            padding: 4rem 1.5rem;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.02);
+        }
+
+        .hero-section h1 {
+            font-size: 2.8rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            color: #5a738e;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Feature containers grid setup override for landing cards */
+        .features-container {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background: #fff;
+            padding: 2.5rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid #3498db;
+            flex: 1;
+            min-width: 280px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        /* Custom color accent for the CATs card */
+        .feature-card.cats-accent {
+            border-top-color: #9b59b6; /* Premium purple for CATs */
+        }
+
+        .feature-card h2 {
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-size: 1.8rem;
+        }
+
+        .feature-card p {
+            color: #7f8c8d;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .feature-btn {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .feature-btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* CATs hover button accent color */
+        .cats-accent .feature-btn {
+            background-color: #9b59b6;
+        }
+        .cats-accent .feature-btn:hover {
+            background-color: #8e44ad;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">MechaRepo</div>
+            <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="cats.html">CATs</a></li>
+                <li><a href="pastpapers.html">Past Papers</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <h1>Welcome to MechaRepo</h1>
+            <p>A centralized, easy-to-access archive designed specifically for Mechatronic engineering coursework. Fast tracking your study sessions with instant image previews and full document downloads.</p>
+        </section>
+
+        <section class="features-container">
+
+             <div class="feature-card cats-accent">
+                <div>
+                    <h2>Continuous Assessment</h2>
+                    <p>Looking for mid-semester assessments? Dive straight into our targeted database of CAT 1 and CAT 2 files. All tests are cataloged cleanly with explicit page view stacks for quick class preparation.</p>
+                </div>
+                <a href="cats.html" class="feature-btn">Browse CATs Archive</a>
+            </div>
+            
+            <div class="feature-card">
+                <div>
+                    <h2>End of Semester Exams</h2>
+                    <p>Access our structured collection of comprehensive engineering past papers. Perfect for reviewing core exam formats, tracking full question distributions, and practicing problem sets across all 7 units.</p>
+                </div>
+                <a href="pastpapers.html" class="feature-btn">Browse Past Papers</a>

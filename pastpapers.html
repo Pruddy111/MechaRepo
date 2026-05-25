@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MechaRepo - Past Papers</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Matches your clean card layout */
+        .card {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-top: 4px solid #3498db;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            margin-bottom: 2px;
+            color: #2c3e50;
+        }
+
+        .unit-subtitle {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .btn-view {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn-view:hover {
+            background-color: #2980b9;
+        }
+
+        /* HIDE THE IMAGES BY DEFAULT ON THE MAIN CARD */
+        .hidden-gallery {
+            display: none;
+        }
+
+        /* THE POP-UP OVERLAY (MODAL) BACKGROUND */
+        .modal-overlay {
+            display: none; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92); /* Darkened for better focus on content */
+            z-index: 1000;
+            overflow-y: auto; 
+            padding: 80px 20px 40px 20px; /* Top padding clears the fixed control bar */
+        }
+
+        /* FIXED ZOOM CONTROL BAR AT THE TOP */
+        .zoom-control-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #1a252f;
+            padding: 12px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            z-index: 1020;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .zoom-btn {
+            background: #34495e;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .zoom-btn:hover {
+            background: #3498db;
+        }
+
+        /* Container that holds the stacked images inside the pop-up */
+        .modal-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            max-width: 850px;
+            margin: 0 auto;
+            position: relative;
+            transition: max-width 0.2s ease-in-out; /* Animates the zooming effect smoothly */
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Fixed Close Button at the top right */
+        .close-modal-btn {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 8px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            z-index: 1030;
+        }
+
+        .close-modal-btn:hover {
+            background: #c0392b;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">MechaRepo</div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="cats.html">CATs</a></li>
+                <li><a href="pastpapers.html" class="active">Past Papers</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>End of Semester Examination Papers</h1>
+        <p>Select a unit below to view the past examination paper images; disregard the Special/Supplemantary part for SMA 3121 and SMA 3244 as the attached were the papers done in 3.1,2025/2026. </p>
+         
+        <div class="grid-container">
+            
+            <div class="card">
+                <h3>EMT 3101</h3>
+                <div class="unit-subtitle">Engineering Design Process</div>
+                <button class="btn-view" onclick="openPaper(this)">View Exam Image</button>
+                
+                <div class="hidden-gallery">
+                    <img src="files/emt3101_page1.jpg" alt="Page 1">
+                    <img src="files/emt3101_page2.jpg" alt="Page 2">
+                    <img src="files/emt3101_page3.jpg" alt="Page 3">
+                    <img src="files/emt3101_page4.jpg" alt="Page 4">
+                    <img src="files/emt3101_page5.jpg" alt="Page 5">
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>EMT 3102</h3>
+                <div class="unit-subtitle">Solid & Structural Mechanics I</div>
+                <button class="btn-view" onclick="openPaper(this)">View Exam Image</button>
+                
+                <div class="hidden-gallery">
+                    <img src="files/emt3102_page1.jpg" alt="Page 1">
+                    <img src="files/emt3102_page2.jpg" alt="Page 2">
+                    <img src="files/emt3102_page3.jpg" alt="Page 3">
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>EMT 3103</h3>
+                <div class="unit-subtitle">Electrical Machine Drives I</div>
+                <button class="btn-view" onclick="openPaper(this)">View Exam Image</button>
+                
+                <div class="hidden-gallery">
+                    <img src="files/emt3103_page1.jpg" alt="Page 1">
+                    <img src="files/emt3103_page2.jpg" alt="Page 2">
+                    <img src="files/emt3103_page3.jpg" alt="Page 3">
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>EMT 3104</h3>
+                <div class="unit-subtitle">Mechatronics System Programming I</div>
+                <button class="btn-view" onclick="openPaper(this)">View Exam Image</button>
+                
+                <div class="hidden-gallery">
+                    <img src="files/emt3104_page1.jpg" alt="Page 1">
+                    <img src="files/emt3104_page2.jpg" alt="Page 2">
+                    <img src="files/emt3104_page3.jpg" alt="Page 3">
+                    <img src="files/emt3104_page4.jpg" alt="Page 4">
+                    <img src="files/emt3104_page5.jpg" alt="Page 5">
+                    <img src="files/emt3104_page6.jpg" alt="Page 6">
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>EMT 3105</h3>
+                <div class="unit-subtitle">Circuit and Network Theory II</div>
+                <button class="btn-view" onclick="openPaper(this)">View Exam Image</button>
+                
+                <div class="hidden-gallery">
+                    <img src="files/emt3105_page1.jpg" alt="Page 1">
+                    <img src="files/emt3105_page2.jpg" alt="Page 2">
+                    <img src="files/emt3105_page3.jpg" alt="Page 3">
+                    <img src="files/emt3105_page4.jpg" alt="Page 4">
+                    <img src="files/emt3105_page5.jpg" alt="Page 5">
+                </div>
+            </div>
+
+             <div class="card">
+                <h3>SMA 3121</h3>
+                <div class="unit-subtitle">Complex Analysis</div>
+                <button class="btn-view" onclick="openPaper(this)">View Exam Image</button>
+                
+                <div class="hidden-gallery">
+                    <img src="files/sma3121_page1.jpg" alt="Page 1">
+                    <img src="files/sma3121_page2.jpg" alt="Page 2">
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>SMA 3244</h3>
+                <div class="unit-subtitle">Partial Differential Equations</div>
+                <button class="btn-view" onclick="openPaper(this)">View Exam Image</button>
+                
+                <div class="hidden-gallery">
+                    <img src="files/sma3244_page1.jpg" alt="Page 1">
+                    <img src="files/sma3244_page2.jpg" alt="Page 2">
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div class="modal-overlay" id="paperModal">
+        <div class="zoom-control-bar">
+            <button class="zoom-btn" onclick="adjustZoom(100)">Zoom In (+)</button>
+            <button class="zoom-btn" onclick="adjustZoom(-100)">Zoom Out (-)</button>
+            <button class="zoom-btn" onclick="resetZoom()">Reset Size</button>
+        </div>
+        
+        <button class="close-modal-btn" onclick="closePaper()">CLOSE &times;</button>
+        <div class="modal-content" id="modalImagesContainer"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 MechaRepo</p>
+    </footer>
+
+    <script>
+        // Global tracking variable for handling the image container structural width
+        let currentMaxWidth = 850; 
+
+        function openPaper(buttonElement) {
+            const hiddenGallery = buttonElement.parentElement.querySelector('.hidden-gallery');
+            const modalContainer = document.getElementById('modalImagesContainer');
+            
+            // Clear old contents
+            modalContainer.innerHTML = "";
+            resetZoom(); // Always start at default size when opening a new unit
+            
+            // Get all images from the hidden gallery
+            const images = hiddenGallery.querySelectorAll('img');
+            
+            images.forEach((img, index) => {
+                // 1. Clone and add the image to the popup
+                const clonedImg = img.cloneNode(true);
+                modalContainer.appendChild(clonedImg);
+                
+                // 2. Create a download button right beneath that specific image
+                const downloadBtn = document.createElement('a');
+                downloadBtn.href = img.src;                 
+                downloadBtn.download = "";                  
+                downloadBtn.className = "btn-view";         
+                downloadBtn.style.margin = "10px 0 40px 0"; 
+                downloadBtn.style.backgroundColor = "#2ecc71"; // Distinct green color
+                downloadBtn.innerText = `Download Page ${index + 1}`;
+                
+                modalContainer.appendChild(downloadBtn);
+            });
+            
+            // Open the pop-up window
+            document.getElementById('paperModal').style.display = "block";
+            document.body.style.overflow = "hidden";
+        }
+
+        // ZOOM CONTROLLER ENGINE
+        function adjustZoom(amount) {
+            const modalContent = document.getElementById('modalImagesContainer');
+            
+            // Calculate new width targets
+            currentMaxWidth += amount;
+            
+            // Safety boundaries (Min size: 450px, Max size: 1600px)
+            if (currentMaxWidth < 450) currentMaxWidth = 450;
+            if (currentMaxWidth > 1600) currentMaxWidth = 1600;
+            
+            // Apply new width to the styling canvas
+            modalContent.style.maxWidth = currentMaxWidth + "px";
+        }
+
+        function resetZoom() {
+            currentMaxWidth = 850; 
+            document.getElementById('modalImagesContainer').style.maxWidth = "850px";
+        }
+
+        function closePaper() {
+            document.getElementById('paperModal').style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+    </script>
+</body>
+</html>
