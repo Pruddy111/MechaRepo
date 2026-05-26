@@ -297,6 +297,25 @@ function adjustZoom(amount) {
         img.style.maxWidth = '100%'; // Re-enables boundaries so it looks clean
     });
 }
+// This is the function that the Close button is looking for!
+function closePaper() {
+    // 1. Find the modal window overlay
+    const modal = document.getElementById('paperModal');
+    
+    if (modal) {
+        // 2. Hide it completely from the screen
+        modal.style.display = 'none'; 
+    }
+    
+    // 3. Clear out the image container so the page runs fast and fresh next time
+    const container = document.getElementById('modalImagesContainer');
+    if (container) {
+        container.innerHTML = '';
+    }
+    
+    // 4. Set the zoom tracker back to 100%
+    currentZoomPercentage = 100;
+}
     </script>
 </body>
 </html>
