@@ -285,14 +285,18 @@ function adjustZoom(amount) {
 }
 
         function resetZoom() {
-            currentMaxWidth = 850; 
-            document.getElementById('modalImagesContainer').style.maxWidth = "850px";
-        }
+    // 1. Reset our tracking variable back to exactly 100%
+    currentZoomPercentage = 100;
 
-        function closePaper() {
-            document.getElementById('paperModal').style.display = "none";
-            document.body.style.overflow = "auto";
-        }
+    // 2. Target the images inside the modal container
+    const modalImages = document.querySelectorAll('#modalImagesContainer img');
+    
+    // 3. Force them back to standard size instantly
+    modalImages.forEach(img => {
+        img.style.width = '100%';
+        img.style.maxWidth = '100%'; // Re-enables boundaries so it looks clean
+    });
+}
     </script>
 </body>
 </html>
