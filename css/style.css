@@ -174,7 +174,7 @@ h1 {
     background: rgba(0, 0, 0, 0.92); 
     z-index: 1000;
     overflow-y: auto; 
-    padding: 80px 20px 40px 20px; 
+    padding: 100px 20px 40px 20px; /* Increased top padding to give room for wrapping buttons on phone layout */
 }
 
 /* FIXED ZOOM CONTROL PANEL DOCK */
@@ -184,9 +184,10 @@ h1 {
     left: 0;
     width: 100%;
     background: #1a252f;
-    padding: 12px;
+    padding: 12px 20px;
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 15px;
     z-index: 1020;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
@@ -217,7 +218,7 @@ h1 {
     max-width: 850px;
     margin: 0 auto;
     position: relative;
-    transition: max-width 0.2s ease-in-out; /* Smooth transition calculation engine */
+    transition: max-width 0.2s ease-in-out; 
 }
 
 .modal-content img {
@@ -227,11 +228,8 @@ h1 {
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 
-/* Fixed Close Button layout adjustment */
+/* Restructured Close Button to adapt correctly inside flex row layout */
 .close-modal-btn {
-    position: fixed;
-    top: 10px;
-    right: 20px;
     background: #e74c3c;
     color: white;
     border: none;
@@ -240,7 +238,8 @@ h1 {
     padding: 8px 14px;
     border-radius: 4px;
     cursor: pointer;
-    z-index: 1030;
+    transition: background 0.2s;
+    margin-left: auto; /* Pushes the close button beautifully to the right side on desktop views */
 }
 
 .close-modal-btn:hover {
@@ -270,38 +269,22 @@ footer {
         margin: 0 10px;
     }
     .zoom-control-bar {
+        flex-wrap: wrap;       /* Safely drops elements down a row instead of smashing them together */
         gap: 8px;
-        padding: 8px;
+        padding: 10px;
     }
     .zoom-btn {
         padding: 6px 12px;
         font-size: 0.85rem;
     }
     .close-modal-btn {
-        right: 10px;
+        margin-left: 0;        /* Resets the right-side push on phone views */
+        width: 100%;           /* Gives close button its own full row space at the bottom of the controller panel if it wraps */
+        text-align: center;
         padding: 6px 10px;
+        font-size: 0.95rem;
     }
-    /* This applies to ALL screens (Desktop & Laptop stay looking good) */
-.controls-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;               /* Keeps a consistent gap between buttons */
-    padding: 10px;
-    width: 100%;
-}
-
-/* 📱 Mobile Specific Styles (Triggers only on screens narrower than 768px) */
-@media (max-width: 768px) {
-    .controls-container {
-        flex-wrap: wrap;     /* Allows elements to drop cleanly to a new line if they run out of space */
-        gap: 8px;            /* Slightly smaller gap on mobile to save space */
+    .modal-overlay {
+        padding-top: 140px;    /* Expands content margin to account for double-row control bar stack on small screens */
     }
-
-    /* Optional: If you want the CLOSE button to stand on its own line on mobile without overlapping */
-    .close-btn-class {
-        margin-top: 5px;     /* Forces vertical breathing room below the zoom buttons */
-        display: inline-block;
-    }
-}
 }
