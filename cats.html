@@ -60,6 +60,7 @@
             background: rgba(0, 0, 0, 0.92); /* Darkened for better focus on content */
             z-index: 1000;
             overflow-y: auto; 
+            overflow-x: auto; /* ✅ Added to allow dragging left/right when zoomed on phones */
             padding: 80px 20px 40px 20px; /* Top padding clears the fixed control bar */
         }
 
@@ -158,6 +159,7 @@
                 <h3>EMT 3102</h3>
                 <div class="unit-subtitle">Solid & Structural Mechanics I (CAT 2)</div>
                 <button class="btn-view" onclick="openPaper(this)">View CAT Image</button>
+                <a href="assets/downloads/emt3102_cat2.pdf" download class="btn-view" style="background-color: #2ecc71; margin-left: 10px;">Download PDF</a>
                 
                 <div class="hidden-gallery">
                     <img src="files/emt3102_cat2_page1.jpg" alt="Page 1">
@@ -169,6 +171,7 @@
                 <h3>EMT 3104</h3>
                 <div class="unit-subtitle">Mechatronics System Programming I (CAT 1)</div>
                 <button class="btn-view" onclick="openPaper(this)">View CAT Image</button>
+                <a href="assets/downloads/emt3104_cat1.pdf" download class="btn-view" style="background-color: #2ecc71; margin-left: 10px;">Download PDF</a>
                 
                 <div class="hidden-gallery">
                     <img src="files/emt3104_cat1_page1.jpg" alt="Page 1">
@@ -179,6 +182,7 @@
                 <h3>EMT 3105</h3>
                 <div class="unit-subtitle">Circuit and Network Theory II (CAT 1)</div>
                 <button class="btn-view" onclick="openPaper(this)">View CAT Image</button>
+                <a href="assets/downloads/emt3105_cat1.pdf" download class="btn-view" style="background-color: #2ecc71; margin-left: 10px;">Download PDF</a>
                 
                 <div class="hidden-gallery">
                     <img src="files/emt3105_cat1_page1.jpg" alt="Page 1">
@@ -189,6 +193,7 @@
                 <h3>SMA 3121</h3>
                 <div class="unit-subtitle">Complex Analysis (CAT 2)</div>
                 <button class="btn-view" onclick="openPaper(this)">View CAT Image</button>
+                <a href="assets/downloads/sma3121_cat2.pdf" download class="btn-view" style="background-color: #2ecc71; margin-left: 10px;">Download PDF</a>
                 
                 <div class="hidden-gallery">
                     <img src="files/sma3121_cat2_page1.jpg" alt="Page 1">
@@ -199,6 +204,7 @@
                 <h3>SMA 3244</h3>
                 <div class="unit-subtitle">Partial Differential Equations (CAT 1)</div>
                 <button class="btn-view" onclick="openPaper(this)">View CAT Image</button>
+                <a href="assets/downloads/sma3244_cat1.pdf" download class="btn-view" style="background-color: #2ecc71; margin-left: 10px;">Download PDF</a>
                 
                 <div class="hidden-gallery">
                     <img src="files/sma3244_cat1_page1.jpg" alt="Page 1">
@@ -238,21 +244,10 @@
             // Get all images from the hidden gallery
             const images = hiddenGallery.querySelectorAll('img');
             
-            images.forEach((img, index) => {
-                // 1. Clone and add the image to the popup
+            images.forEach((img) => {
+                // ✅ Clone and add the image to the popup ONLY (No download buttons generated here anymore)
                 const clonedImg = img.cloneNode(true);
                 modalContainer.appendChild(clonedImg);
-                
-                // 2. Create a download button right beneath that specific image
-                const downloadBtn = document.createElement('a');
-                downloadBtn.href = img.src;                 
-                downloadBtn.download = "";                  
-                downloadBtn.className = "btn-view";         
-                downloadBtn.style.margin = "10px 0 40px 0"; 
-                downloadBtn.style.backgroundColor = "#2ecc71"; // Green color
-                downloadBtn.innerText = `Download Page ${index + 1}`;
-                
-                modalContainer.appendChild(downloadBtn);
             });
             
             // Open the pop-up window
@@ -260,118 +255,120 @@
             document.body.style.overflow = "hidden";
         }
 
-       // Start with a base width percentage
-let currentZoomPercentage = 100; 
+        // Start with a base width percentage
+        let currentZoomPercentage = 100; 
 
-function adjustZoom(amount) {
-    const modalImages = document.querySelectorAll('#modalImagesContainer img');
-    
-    // If amount is positive (100), zoom in. If negative (-100), zoom out.
-    if (amount > 0) {
-        currentZoomPercentage += 25; // Increase size by 25%
-    } else {
-        currentZoomPercentage -= 25; // Decrease size by 25%
-    }
-
-    // Don't let it shrink past 50% or grow past 300%
-    if (currentZoomPercentage < 50) currentZoomPercentage = 50;
-    if (currentZoomPercentage > 300) currentZoomPercentage = 300;
-
-    // Apply the new width to every image inside the viewer container
-    modalImages.forEach(img => {
-        img.style.width = currentZoomPercentage + '%';
-        img.style.maxWidth = 'none'; // Prevents CSS from trapping the image size
-    });
-}
-
-        function resetZoom() {
-    // 1. Reset our tracking variable back to exactly 100%
-    currentZoomPercentage = 100;
-
-    // 2. Target the images inside the modal container
-    const modalImages = document.querySelectorAll('#modalImagesContainer img');
-    
-    // 3. Force them back to standard size instantly
-    modalImages.forEach(img => {
-        img.style.width = '100%';
-        img.style.maxWidth = '100%'; // Re-enables boundaries so it looks clean
-    });
-}
-// This is the function that the Close button is looking for!
-function closePaper() {
-    // 1. Find the modal window overlay
-    const modal = document.getElementById('paperModal');
-    
-    if (modal) {
-        // 2. Hide it completely from the screen
-        modal.style.display = 'none'; 
-    }
-    
-    // 3. Clear out the image container so the page runs fast and fresh next time
-    const container = document.getElementById('modalImagesContainer');
-    if (container) {
-        container.innerHTML = '';
-    }
-    
-    // 4. Set the zoom tracker back to 100%
-    currentZoomPercentage = 100;
-}
-// --- MOBILE PINCH-TO-ZOOM TOUCH ENGINE ---
-let touchStartDist = 0;
-let initialZoomOnTouch = 100;
-
-// Target the container that holds the CAT images
-const imageContainer = document.getElementById('modalImagesContainer');
-
-if (imageContainer) {
-    // 1. Detect when two fingers first hit the screen
-    imageContainer.addEventListener('touchstart', function(e) {
-        if (e.touches.length === 2) {
-            // Calculate the initial distance between finger 1 and finger 2
-            touchStartDist = Math.hypot(
-                e.touches[0].pageX - e.touches[1].pageX,
-                e.touches[0].pageY - e.touches[1].pageY
-            );
-            initialZoomOnTouch = currentZoomPercentage;
-        }
-    }, { passive: true });
-
-    // 2. Track the fingers as they spread apart or pinch together
-    imageContainer.addEventListener('touchmove', function(e) {
-        if (e.touches.length === 2 && touchStartDist > 0) {
-            // Calculate the new distance between fingers
-            const currentDist = Math.hypot(
-                e.touches[0].pageX - e.touches[1].pageX,
-                e.touches[0].pageY - e.touches[1].pageY
-            );
+        function adjustZoom(amount) {
+            const modalImages = document.querySelectorAll('#modalImagesContainer img');
             
-            // Determine how much the user has pinched/spread
-            const scaleFactor = currentDist / touchStartDist;
-            let newZoom = initialZoomOnTouch * scaleFactor;
+            // If amount is positive (100), zoom in. If negative (-100), zoom out.
+            if (amount > 0) {
+                currentZoomPercentage += 25; // Increase size by 25%
+            } else {
+                currentZoomPercentage -= 25; // Decrease size by 25%
+            }
 
-            // Restrict zoom limits to match your buttons (50% to 300%)
-            if (newZoom < 50) newZoom = 50;
-            if (newZoom > 300) newZoom = 300;
+            // Don't let it shrink past 50% or grow past 300%
+            if (currentZoomPercentage < 50) currentZoomPercentage = 50;
+            if (currentZoomPercentage > 300) currentZoomPercentage = 300;
 
-            // Update our global tracking variable so the buttons stay synced!
-            currentZoomPercentage = newZoom;
-
-            // Apply the zoom style to the images immediately
-            const modalImages = imageContainer.querySelectorAll('img');
+            // Apply the new width to every image inside the viewer container
             modalImages.forEach(img => {
                 img.style.width = currentZoomPercentage + '%';
-                img.style.maxWidth = 'none'; // Unlocks the layout constraints
+                img.style.maxWidth = 'none'; // Prevents CSS from trapping the image size
             });
         }
-    }, { passive: true });
 
-    // 3. Reset tracking when fingers lift off the screen
-    imageContainer.addEventListener('touchend', function(e) {
-        if (e.touches.length < 2) {
-            touchStartDist = 0;
+        function resetZoom() {
+            // 1. Reset our tracking variable back to exactly 100%
+            currentZoomPercentage = 100;
+
+            // 2. Target the images inside the modal container
+            const modalImages = document.querySelectorAll('#modalImagesContainer img');
+            
+            // 3. Force them back to standard size instantly
+            modalImages.forEach(img => {
+                img.style.width = '100%';
+                img.style.maxWidth = '100%'; // Re-enables boundaries so it looks clean
+            });
         }
-    });
-}
+
+        // This is the function that the Close button is looking for!
+        function closePaper() {
+            // 1. Find the modal window overlay
+            const modal = document.getElementById('paperModal');
+            
+            if (modal) {
+                // 2. Hide it completely from the screen
+                modal.style.display = 'none'; 
+            }
+            
+            // 3. Clear out the image container so the page runs fast and fresh next time
+            const container = document.getElementById('modalImagesContainer');
+            if (container) {
+                container.innerHTML = '';
+            }
+            
+            // 4. Set the zoom tracker back to 100%
+            currentZoomPercentage = 100;
+        }
+
+        // --- MOBILE PINCH-TO-ZOOM TOUCH ENGINE ---
+        let touchStartDist = 0;
+        let initialZoomOnTouch = 100;
+
+        // Target the container that holds the CAT images
+        const imageContainer = document.getElementById('modalImagesContainer');
+
+        if (imageContainer) {
+            // 1. Detect when two fingers first hit the screen
+            imageContainer.addEventListener('touchstart', function(e) {
+                if (e.touches.length === 2) {
+                    // Calculate the initial distance between finger 1 and finger 2
+                    touchStartDist = Math.hypot(
+                        e.touches[0].pageX - e.touches[1].pageX,
+                        e.touches[0].pageY - e.touches[1].pageY
+                    );
+                    initialZoomOnTouch = currentZoomPercentage;
+                }
+            }, { passive: true });
+
+            // 2. Track the fingers as they spread apart or pinch together
+            imageContainer.addEventListener('touchmove', function(e) {
+                if (e.touches.length === 2 && touchStartDist > 0) {
+                    // Calculate the new distance between fingers
+                    const currentDist = Math.hypot(
+                        e.touches[0].pageX - e.touches[1].pageX,
+                        e.touches[0].pageY - e.touches[1].pageY
+                    );
+                    
+                    // Determine how much the user has pinched/spread
+                    const scaleFactor = currentDist / touchStartDist;
+                    let newZoom = initialZoomOnTouch * scaleFactor;
+
+                    // Restrict zoom limits to match your buttons (50% to 300%)
+                    if (newZoom < 50) newZoom = 50;
+                    if (newZoom > 300) newZoom = 300;
+
+                    // Update our global tracking variable so the buttons stay synced!
+                    currentZoomPercentage = newZoom;
+
+                    // Apply the zoom style to the images immediately
+                    const modalImages = imageContainer.querySelectorAll('img');
+                    modalImages.forEach(img => {
+                        img.style.width = currentZoomPercentage + '%';
+                        img.style.maxWidth = 'none'; // Unlocks the layout constraints
+                    });
+                }
+            }, { passive: true });
+
+            // 3. Reset tracking when fingers lift off the screen
+            imageContainer.addEventListener('touchend', function(e) {
+                if (e.touches.length < 2) {
+                    touchStartDist = 0;
+                }
+            });
+        }
     </script>
 </body>
 </html>
