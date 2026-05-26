@@ -281,4 +281,27 @@ footer {
         right: 10px;
         padding: 6px 10px;
     }
+    /* This applies to ALL screens (Desktop & Laptop stay looking good) */
+.controls-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;               /* Keeps a consistent gap between buttons */
+    padding: 10px;
+    width: 100%;
+}
+
+/* 📱 Mobile Specific Styles (Triggers only on screens narrower than 768px) */
+@media (max-width: 768px) {
+    .controls-container {
+        flex-wrap: wrap;     /* Allows elements to drop cleanly to a new line if they run out of space */
+        gap: 8px;            /* Slightly smaller gap on mobile to save space */
+    }
+
+    /* Optional: If you want the CLOSE button to stand on its own line on mobile without overlapping */
+    .close-btn-class {
+        margin-top: 5px;     /* Forces vertical breathing room below the zoom buttons */
+        display: inline-block;
+    }
+}
 }
