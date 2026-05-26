@@ -287,4 +287,32 @@ footer {
     .modal-overlay {
         padding-top: 140px;    /* Expands content margin to account for double-row control bar stack on small screens */
     }
+    /* 📱 Absolute Mobile Layout Fix */
+@media (max-width: 768px) {
+    .zoom-control-bar {
+        display: flex !important;
+        flex-wrap: wrap !important; /* Forces the red button to a new line if it runs out of room */
+        justify-content: center !important;
+        gap: 8px !important;
+        padding: 10px !important;
+        height: auto !important;     /* Allows the bar to expand if buttons wrap */
+    }
+
+    .zoom-btn {
+        padding: 6px 10px !important;
+        font-size: 0.8rem !important;
+        margin: 0 !important;
+    }
+
+    .close-modal-btn {
+        position: static !important; /* Wipes out the fixed positioning that caused the overlap */
+        padding: 6px 12px !important;
+        font-size: 0.85rem !important;
+        width: auto !important;
+    }
+
+    .modal-overlay {
+        padding-top: 120px !important; /* Pushes the paper down so the expanded bar doesn't cover it */
+    }
+}
 }
