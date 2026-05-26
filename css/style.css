@@ -173,7 +173,8 @@ h1 {
     height: 100%;
     background: rgba(0, 0, 0, 0.92); 
     z-index: 1000;
-    overflow-y: auto; 
+    overflow-y: auto;
+    overflow-x: auto; 
     padding: 100px 20px 40px 20px; /* Increased top padding to give room for wrapping buttons on phone layout */
 }
 

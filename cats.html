@@ -316,6 +316,62 @@ function closePaper() {
     // 4. Set the zoom tracker back to 100%
     currentZoomPercentage = 100;
 }
+// --- MOBILE PINCH-TO-ZOOM TOUCH ENGINE ---
+let touchStartDist = 0;
+let initialZoomOnTouch = 100;
+
+// Target the container that holds the CAT images
+const imageContainer = document.getElementById('modalImagesContainer');
+
+if (imageContainer) {
+    // 1. Detect when two fingers first hit the screen
+    imageContainer.addEventListener('touchstart', function(e) {
+        if (e.touches.length === 2) {
+            // Calculate the initial distance between finger 1 and finger 2
+            touchStartDist = Math.hypot(
+                e.touches[0].pageX - e.touches[1].pageX,
+                e.touches[0].pageY - e.touches[1].pageY
+            );
+            initialZoomOnTouch = currentZoomPercentage;
+        }
+    }, { passive: true });
+
+    // 2. Track the fingers as they spread apart or pinch together
+    imageContainer.addEventListener('touchmove', function(e) {
+        if (e.touches.length === 2 && touchStartDist > 0) {
+            // Calculate the new distance between fingers
+            const currentDist = Math.hypot(
+                e.touches[0].pageX - e.touches[1].pageX,
+                e.touches[0].pageY - e.touches[1].pageY
+            );
+            
+            // Determine how much the user has pinched/spread
+            const scaleFactor = currentDist / touchStartDist;
+            let newZoom = initialZoomOnTouch * scaleFactor;
+
+            // Restrict zoom limits to match your buttons (50% to 300%)
+            if (newZoom < 50) newZoom = 50;
+            if (newZoom > 300) newZoom = 300;
+
+            // Update our global tracking variable so the buttons stay synced!
+            currentZoomPercentage = newZoom;
+
+            // Apply the zoom style to the images immediately
+            const modalImages = imageContainer.querySelectorAll('img');
+            modalImages.forEach(img => {
+                img.style.width = currentZoomPercentage + '%';
+                img.style.maxWidth = 'none'; // Unlocks the layout constraints
+            });
+        }
+    }, { passive: true });
+
+    // 3. Reset tracking when fingers lift off the screen
+    imageContainer.addEventListener('touchend', function(e) {
+        if (e.touches.length < 2) {
+            touchStartDist = 0;
+        }
+    });
+}
     </script>
 </body>
 </html>
