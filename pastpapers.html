@@ -298,21 +298,29 @@
             document.body.style.overflow = "hidden";
         }
 
-        // ZOOM CONTROLLER ENGINE
-        function adjustZoom(amount) {
-            const modalContent = document.getElementById('modalImagesContainer');
-            
-            // Calculate new width targets
-            currentMaxWidth += amount;
-            
-            // Safety boundaries (Min size: 450px, Max size: 1600px)
-            if (currentMaxWidth < 450) currentMaxWidth = 450;
-            if (currentMaxWidth > 1600) currentMaxWidth = 1600;
-            
-            // Apply new width to the styling canvas
-            modalContent.style.maxWidth = currentMaxWidth + "px";
-        }
+      // Start with a base width percentage
+let currentZoomPercentage = 100; 
 
+function adjustZoom(amount) {
+    const modalImages = document.querySelectorAll('#modalImagesContainer img');
+    
+    // If amount is positive (100), zoom in. If negative (-100), zoom out.
+    if (amount > 0) {
+        currentZoomPercentage += 25; // Increase size by 25%
+    } else {
+        currentZoomPercentage -= 25; // Decrease size by 25%
+    }
+
+    // Don't let it shrink past 50% or grow past 300%
+    if (currentZoomPercentage < 50) currentZoomPercentage = 50;
+    if (currentZoomPercentage > 300) currentZoomPercentage = 300;
+
+    // Apply the new width to every image inside the viewer container
+    modalImages.forEach(img => {
+        img.style.width = currentZoomPercentage + '%';
+        img.style.maxWidth = 'none'; // Prevents CSS from trapping the image size
+    });
+}
         function resetZoom() {
             currentMaxWidth = 850; 
             document.getElementById('modalImagesContainer').style.maxWidth = "850px";
