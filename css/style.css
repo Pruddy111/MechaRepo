@@ -315,11 +315,6 @@ footer {
     .modal-overlay {
         padding-top: 120px !important; /* Pushes the paper down so the expanded bar doesn't cover it */
     }
-    .year-title {
-    font-family: Georgia, serif;
-    text-decoration: underline;
-    font-size: 24px;
-    font-weight: bold;
-}
+    
 }
 }
